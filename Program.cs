@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,34 +15,34 @@ builder.Services.AddDbContext<WebAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIContext") ?? throw new InvalidOperationException("Connection string 'WebAPIContext' not found.")));
 
 //// Configuration de la base de donn�es
-//builder.Services.AddDbContext<WebAPIContext>(options =>
-//{
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIContext") ?? throw new InvalidOperationException("Connection string 'WebAPIContext' not found."));
-//    options.UseLazyLoadingProxies();
+builder.Services.AddDbContext<WebAPIContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIContext") ?? throw new InvalidOperationException("Connection string 'WebAPIContext' not found."));
+    options.UseLazyLoadingProxies();
 
-//});
+});
 
 
 // Configuration de l'authentification avec JWT
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.SaveToken = true;
-//    options.RequireHttpsMetadata = false; // Lors du d�veloppement
-//    options.TokenValidationParameters = new TokenValidationParameters()
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidAudience = "http://localhost/4200",
-//        ValidIssuer = "http://localhost/7159",
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Loo00gue Phrase SinON!"))
-//    };
-//});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false; // Lors du d�veloppement
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = "http://localhost/4200",
+        ValidIssuer = "http://localhost/7075",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Loo00gue Phrase SinON!"))
+    };
+});
 
 builder.Services.AddControllers();
 

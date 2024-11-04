@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
 
                     JwtSecurityToken token = new JwtSecurityToken(
 
-                        issuer: "https://localhost:7159",
+                        issuer: "https://localhost:7075",
 
                         audience: "http://localhost:4200",
 
