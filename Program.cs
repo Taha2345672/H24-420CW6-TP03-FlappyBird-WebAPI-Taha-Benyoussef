@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FlappyBird.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<WebAPIContext>(options =>
 
 });
 
+// Add services to the container.
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<WebAPIContext>();
 
 // Configuration de l'authentification avec JWT
 builder.Services.AddAuthentication(options =>
