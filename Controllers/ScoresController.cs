@@ -53,41 +53,34 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-          //  _scoreService.Entry(scores).State = EntityState.Modified;
-
-            try
+            var result = await _scoreService.ChangeScoreVisibilityAsync(id, scores);
+            if (!result)
             {
-               // await _scoreService.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-               //// if (!ScoresExists(id))
-               // {
-               //     return NotFound();
-               // }
-               // else
-               // {
-               //     throw;
-               // }
+                return NotFound();
             }
 
             return NoContent();
         }
+
 
         // POST: api/Scores
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Scores>> PostScore(Scores scores)
         {
-         //  _scoreService.Scores.Add(scores);
-           // await _scoreService.SaveChangesAsync();
+            var createdScore = await _scoreService.AddScoreAsync(scores);
+            if (createdScore == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
 
-            return CreatedAtAction("GetScores", new { id = scores.Id }, scores);
+            return CreatedAtAction(nameof(GetMyScores), new { id = createdScore.Id }, createdScore);
         }
 
-       //private bool ScoresExists(int id)
-       // {
-           // return _scoreService.Scores.Any(e => e.Id == id);
-        }
+        //private bool ScoresExists(int id)
+        //{
+        //    return _scoreService.sc.Any(e => e.Id == id);
+        //}
+
     }
-//}
+}
