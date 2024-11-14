@@ -20,27 +20,29 @@ namespace WebAPI.Data
             base.OnModelCreating(builder);
 
             // Seed Users
+            var hasher = new PasswordHasher<User>();
+
             var user1 = new User
             {
-                Id = "user1-id",
+                Id = "11111111-1111-1111-1111-111111111111",
                 UserName = "User1",
                 NormalizedUserName = "USER1",
                 Email = "user1@example.com",
                 NormalizedEmail = "USER1@EXAMPLE.COM",
-                EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<User>().HashPassword(null, "Password123!")
+                EmailConfirmed = true
             };
+            user1.PasswordHash = hasher.HashPassword(user1, "Passw0rd123!");
 
             var user2 = new User
             {
-                Id = "user2-id",
+                Id = "22222222-2222-2222-2222-222222222222",
                 UserName = "User2",
                 NormalizedUserName = "USER2",
                 Email = "user2@example.com",
                 NormalizedEmail = "USER2@EXAMPLE.COM",
-                EmailConfirmed = true,
-                PasswordHash = new PasswordHasher<User>().HashPassword(null, "Password123!")
+                EmailConfirmed = true
             };
+            user2.PasswordHash = hasher.HashPassword(user2, "Passw0rd123!");
 
             builder.Entity<User>().HasData(user1, user2);
 
@@ -49,7 +51,6 @@ namespace WebAPI.Data
                 new Scores
                 {
                     Id = 1,
-               
                     Pseudo = "Player1",
                     Date = DateTime.Now,
                     TimeInSeconds = 120,
