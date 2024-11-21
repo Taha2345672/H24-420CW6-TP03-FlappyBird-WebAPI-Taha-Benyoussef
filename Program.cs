@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using WebAPI.Data;
+using WebAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<WebAPIContext>(options =>
 
 // Add services to the container.
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<WebAPIContext>();
+builder.Services.AddScoped<ScoreService>();
+
 
 // Configuration de l'authentification avec JWT
 builder.Services.AddAuthentication(options =>
