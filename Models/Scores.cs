@@ -1,4 +1,8 @@
-﻿namespace WebAPI.Models
+﻿using FlappyBird.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
+namespace WebAPI.Models
 {
     public class Scores
     {
@@ -9,6 +13,13 @@
         public int TimeInSeconds { get; set; }
         public int ScoreValue { get; set; }
         public bool IsPublic { get; set; }
+
+        [ForeignKey("User")] 
+        public string UserId { get; set; } = null!;
+        
+        [JsonIgnore]
+        public virtual User User { get; set; } = null!;
+
 
     }
 }
