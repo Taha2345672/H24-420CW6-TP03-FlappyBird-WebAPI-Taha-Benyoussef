@@ -11,9 +11,7 @@ using WebAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<WebAPIContext>(options =>
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("WebAPIContext") ?? throw new InvalidOperationException("Connection string 'WebAPIContext' not found.")));
 
 //// Configuration de la base de donn�es
 builder.Services.AddDbContext<WebAPIContext>(options =>
