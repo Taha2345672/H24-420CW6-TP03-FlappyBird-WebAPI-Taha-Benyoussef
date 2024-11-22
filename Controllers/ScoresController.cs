@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
         }
 
         // GET: api/Scores/5
-        [HttpGet]
+        [HttpGet("{userName}")]
         public async Task<ActionResult<Scores>> GetMyScores(int id)
         {
             Scores? scores = await _scoreService.GetMyScoresAsync(id);
