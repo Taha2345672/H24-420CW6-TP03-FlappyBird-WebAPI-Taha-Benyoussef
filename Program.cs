@@ -33,49 +33,66 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
+}).AddJwtBearer(options =>
 {
     options.SaveToken = true;
-    options.RequireHttpsMetadata = false; // Lors du d�veloppement
-    options.TokenValidationParameters = new TokenValidationParameters()
+    options.RequireHttpsMetadata = false; // Développement
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
     {
-        ValidateIssuer = true,
         ValidateAudience = true,
-        ValidAudience = "http://localhost/4200",
-        ValidIssuer = "http://localhost/7075",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Loo00gue Phrase SinON!"))
+        ValidateIssuer = true,
+        ValidAudience = "http://localhost:4200",
+        ValidIssuer = "https://localhost:7075",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Le secret de la vie éternelle est l'amour"))
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Allow all", builder =>
+    {
+        builder.AllowAnyOrigin();
+        builder.AllowAnyMethod();
+        builder.AllowAnyHeader();
+    });
 
-// Configuration de Swagger/OpenAPI
+});
+
+
+
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
 
-// Configurez CORS avant d'appeler builder.Build()
-app.UseCors(options =>
+builder.Services.AddCors(options =>
 {
-    options.AllowAnyOrigin();
-    options.AllowAnyMethod();
-    options.AllowAnyHeader();
+    options.AddPolicy("Allow all", policy =>
+    {
+
+        policy.AllowAnyOrigin();
+        policy.AllowAnyMethod();
+        policy.AllowAnyHeader();
+
+    });
+
 });
 
-// Configurez le pipeline de requ�tes HTTP
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("Allow all");
 app.UseHttpsRedirection();
-app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.Run();
