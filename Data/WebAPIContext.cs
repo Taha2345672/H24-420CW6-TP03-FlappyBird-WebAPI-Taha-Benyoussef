@@ -55,7 +55,8 @@ namespace WebAPI.Data
                     Date = DateTime.Now,
                     TimeInSeconds = 120,
                     ScoreValue = 100,
-                    IsPublic = true
+                    IsPublic = true,
+                    UserId = user1.Id 
                 },
                 new Scores
                 {
@@ -64,7 +65,8 @@ namespace WebAPI.Data
                     Date = DateTime.Now,
                     TimeInSeconds = 90,
                     ScoreValue = 50,
-                    IsPublic = false
+                    IsPublic = false,
+                    UserId = user1.Id 
                 },
                 new Scores
                 {
@@ -73,7 +75,8 @@ namespace WebAPI.Data
                     Date = DateTime.Now,
                     TimeInSeconds = 200,
                     ScoreValue = 200,
-                    IsPublic = true
+                    IsPublic = true,
+                    UserId = user2.Id 
                 },
                 new Scores
                 {
@@ -82,9 +85,11 @@ namespace WebAPI.Data
                     Date = DateTime.Now,
                     TimeInSeconds = 150,
                     ScoreValue = 75,
-                    IsPublic = false
+                    IsPublic = false,
+                    UserId = user2.Id 
                 }
             );
         }
+
     }
 }
