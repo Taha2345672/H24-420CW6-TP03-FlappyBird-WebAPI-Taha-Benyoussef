@@ -9,8 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebAPI.Data;
-using WebAPI.DTO;
 using WebAPI.Models;
+using WebAPI.Models.DTO;
 
 
 namespace WebAPI.Controllers
